@@ -30,7 +30,7 @@ def on_message(client, userdata, msg):
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:Stop':
         print("stop")
-        pixel_ring.set_color(r=100)
+        pixel_ring.set_color(g=100)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:OpenTheDoor':
@@ -40,7 +40,7 @@ def on_message(client, userdata, msg):
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
         print("close the door")
-        pixel_ring.set_color(r=255)
+        pixel_ring.set_color(r=46,g=250,b=226)
         time.sleep(1)
         pixel_ring.off()        
     elif msg.topic.startswith('hermes/intent/'):
