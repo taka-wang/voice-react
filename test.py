@@ -34,6 +34,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
+pixel_ring.off()
 client.connect(HOST, PORT, 60)
 client.loop_forever()
 
