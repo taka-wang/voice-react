@@ -23,11 +23,12 @@ def on_message(client, userdata, msg):
     if msg.topic == 'hermes/asr/textCaptured':
         pixel_ring.set_color(r=255)
         print("Captured")
-        time.sleep(1)
-    elif msg.topic == 'hermes/intent/INTENT_NAME':
+        time.sleep(0.5)
+        pixel_ring.off()
+    elif msg.topic == 'hermes/intent/#':
         print("Intent detected!")
-        pixel_ring.set_color(g=255)
-        time.sleep(1)
+        pixel_ring.set_color(r=255,g=255)
+        time.sleep(0.5)
         pixel_ring.off()
 
 client = mqtt.Client()
