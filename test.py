@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):
     if msg.topic == 'hermes/asr/textCaptured':
         print("Captured")
         pixel_ring.set_color(r=255)
-        time.sleep(1)
+        time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic.startswith('hermes/intent/'):
         print("Intent detected!")
