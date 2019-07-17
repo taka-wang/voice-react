@@ -12,7 +12,7 @@ def on_connect(client, userdata, flags, rc):
 
     client.subscribe("hermes/asr/textCaptured")
     # Subscribe to intent topic
-    client.subscribe('hermes/intent/INTENT_NAME')
+    client.subscribe('hermes/intent/#')
     
 def on_message(client, userdata, msg):
     if msg.topic == 'hermes/hotword/default/detected':
@@ -25,7 +25,8 @@ def on_message(client, userdata, msg):
         print("Captured")
         time.sleep(0.5)
         pixel_ring.off()
-    elif msg.topic == 'hermes/intent/#':
+    #elif msg.topic == 'hermes/intent/#':
+    else:
         print("Intent detected!")
         pixel_ring.set_color(r=255,g=255)
         time.sleep(0.5)
