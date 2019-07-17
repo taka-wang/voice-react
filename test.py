@@ -25,8 +25,7 @@ def on_message(client, userdata, msg):
         print("Captured")
         time.sleep(0.5)
         pixel_ring.off()
-    #elif msg.topic == 'hermes/intent/#':
-    else:
+    elif msg.topic.startswith('hermes/intent/'):
         print("Intent detected!")
         pixel_ring.set_color(r=255,g=255)
         time.sleep(0.5)
