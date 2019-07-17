@@ -40,7 +40,7 @@ def on_message(client, userdata, msg):
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
         print("close the door")
-        pixel_ring.set_color(r=46,g=250,b=226)
+        pixel_ring.set_color(r=200,g=133)
         time.sleep(1)
         pixel_ring.off()        
     elif msg.topic.startswith('hermes/intent/'):
