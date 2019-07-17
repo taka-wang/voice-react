@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
         pixel_ring.think() # actually listening
     elif msg.topic == 'hermes/asr/textCaptured':
         print("Captured")
-        pixel_ring.set_color(r=255)
+        pixel_ring.set_color(r=200)
         time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:AutoRun':
