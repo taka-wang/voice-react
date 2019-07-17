@@ -18,11 +18,31 @@ def on_message(client, userdata, msg):
     if msg.topic == 'hermes/hotword/default/detected':
         print("Hotword detected!")
         pixel_ring.think() # actually listening
-    if msg.topic == 'hermes/asr/textCaptured':
+    elif msg.topic == 'hermes/asr/textCaptured':
         print("Captured")
         pixel_ring.set_color(r=255)
         time.sleep(0.5)
         pixel_ring.off()
+    elif msg.topic == 'hermes/intent/taka-wang:AutoRun':
+        print("auto run")
+        pixel_ring.set_color(r=204,g=46,b=250)
+        time.sleep(1)
+        pixel_ring.off()
+    elif msg.topic == 'hermes/intent/taka-wang:Stop':
+        print("stop")
+        pixel_ring.set_color(r=100)
+        time.sleep(1)
+        pixel_ring.off()
+    elif msg.topic == 'hermes/intent/taka-wang:OpenTheDoor':
+        print("open the door")
+        pixel_ring.set_color(g=255)
+        time.sleep(1)
+        pixel_ring.off()
+    elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
+        print("close the door")
+        pixel_ring.set_color(r=255)
+        time.sleep(1)
+        pixel_ring.off()        
     elif msg.topic.startswith('hermes/intent/'):
         print("Intent detected! " + msg.topic)
         pixel_ring.set_color(r=255,g=255)
