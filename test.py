@@ -17,18 +17,16 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     if msg.topic == 'hermes/hotword/default/detected':
         print("Hotword detected!")
-        pixel_ring.wakeup()
-        time.sleep(0.05)
-        pixel_ring.think()
+        pixel_ring.think() # actually listening
     if msg.topic == 'hermes/asr/textCaptured':
-        pixel_ring.set_color(r=255)
         print("Captured")
+        pixel_ring.set_color(r=255)
         time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic.startswith('hermes/intent/'):
         print("Intent detected!")
         pixel_ring.set_color(r=255,g=255)
-        time.sleep(0.5)
+        time.speak(1)
         pixel_ring.off()
 
 client = mqtt.Client()
