@@ -1,9 +1,11 @@
 [Unit]
 Description=Snips Butterfly Service
 After=multi-user.target
+
 [Service]
 Type=simple
 ExecStart=/usr/bin/python /home/pi/snips_butterfly/snips_handler.py
 Restart=on-abort
+
 [Install]
 WantedBy=multi-user.target
