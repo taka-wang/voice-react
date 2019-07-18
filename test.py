@@ -5,6 +5,12 @@ import paho.mqtt.client as mqtt
 from pixel_ring import pixel_ring
 import time
 import json
+import logging
+
+# Setup logger
+logging.basicConfig(stream=sys.stderr, format='%(levelname)7s: %(message)s')
+logger = logging.getLogger('Main')
+logger.setLevel(logging.DEBUG)
 
 # MQTT client to connect to the bus
 client = mqtt.Client()
@@ -18,7 +24,7 @@ ALL_INTENTS = "hermes/intent/#"
 
 # Subscribe to the important messages
 def on_connect(client, userdata, flags, rc):
-    print("Connected to {0} with result code {1}".format(HOST, rc))
+    logger.debug("Connected to {0} with result code {1}".format(HOST, rc))
     # Subscribe to the hotword detected topic
     client.subscribe(HOTWORD_DETECTED)
     # Subscribe to the text command captured topic
@@ -29,39 +35,38 @@ def on_connect(client, userdata, flags, rc):
 # Process a message as it arrives
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
-    print(payload)
+    logger.debug("Topic:{0}, Payload:{1}".format(msg.topic, payload))
     if msg.topic == 'hermes/hotword/default/detected':
-        print("Hotword detected!")
+        logger.info("Hotword detected!")
         pixel_ring.think() # actually listening
     elif msg.topic == 'hermes/asr/textCaptured':
-        print("Captured")
+        logger.info("Command captured!")
         pixel_ring.set_color(r=200)
         time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:AutoRun':
-        print("auto run")
+        logger.info("Intent: auto run")
         pixel_ring.set_color(r=204,g=46,b=250)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:Stop':
-        print("stop")
+        logger.info("Intent: stop")
         pixel_ring.set_color(g=100)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:OpenTheDoor':
-        print("open the door")
+        logger.info("Intent: open the door")
         pixel_ring.set_color(g=255)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
-        print("close the door")
+        logger.info("Intent: close the door")
         pixel_ring.set_color(r=200,g=133)
         time.sleep(1)
         pixel_ring.off()        
     elif msg.topic.startswith('hermes/intent/'):
-        print("Intent detected! " + msg.topic)
+        logger.info("Intent topic: {0}".format(msg.topic))
         pixel_ring.set_color(r=255,g=255)
-        #pixel_ring.speak()
         time.sleep(1)
         pixel_ring.off()
 
