@@ -41,32 +41,32 @@ def on_message(client, userdata, msg):
         logger.info("Hotword detected!")
         pixel_ring.think() # actually listening
     elif msg.topic == 'hermes/asr/textCaptured':
-        logger.info("Command captured! {0}".format(msg.topic))
+        logger.info("Command captured! [{0}]".format(msg.topic))
         pixel_ring.set_color(r=200)
         time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:AutoRun':
-        logger.info("Intent topic: {0}".format(msg.topic))
+        logger.info("Intent topic: [{0}]".format(msg.topic))
         pixel_ring.set_color(r=204,g=46,b=250)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:Stop':
-        logger.info("Intent topic: {0}".format(msg.topic))
+        logger.info("Intent topic: [{0}]".format(msg.topic))
         pixel_ring.set_color(g=100)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:OpenTheDoor':
-        logger.info("Intent topic: {0}".format(msg.topic))
+        logger.info("Intent topic: [{0}]".format(msg.topic))
         pixel_ring.set_color(g=255)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
-        logger.info("Intent topic: {0}".format(msg.topic))
+        logger.info("Intent topic: [{0}]".format(msg.topic))
         pixel_ring.set_color(r=200,g=133)
         time.sleep(1)
         pixel_ring.off()        
     elif msg.topic.startswith('hermes/intent/'):
-        logger.info("Intent topic: {0}".format(msg.topic))
+        logger.info("Intent topic: [{0}]".format(msg.topic))
         pixel_ring.set_color(r=255,g=255)
         time.sleep(1)
         pixel_ring.off()
