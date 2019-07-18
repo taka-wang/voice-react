@@ -5,11 +5,12 @@ import paho.mqtt.client as mqtt
 from pixel_ring import pixel_ring
 import time
 import json
+import sys
 import logging
 
 # Setup logger
 logging.basicConfig(stream=sys.stderr, format='%(levelname)7s: %(message)s')
-logger = logging.getLogger('Main')
+logger = logging.getLogger('Handler')
 logger.setLevel(logging.DEBUG)
 
 # MQTT client to connect to the bus
