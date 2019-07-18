@@ -1,20 +1,35 @@
+# encoding: utf-8
+from __future__ import unicode_literals
+
 import paho.mqtt.client as mqtt
 from pixel_ring import pixel_ring
 import time
+import json
 
-HOST = '127.0.0.1'
+# MQTT client to connect to the bus
+client = mqtt.Client()
+HOST = "localhost"
 PORT = 1883
 
+# Snips topcis
+HOTWORD_DETECTED = "hermes/hotword/default/detected"
+TEXT_CAPTURED = "hermes/asr/textCaptured"
+ALL_INTENTS = "hermes/intent/#"
+
+# Subscribe to the important messages
 def on_connect(client, userdata, flags, rc):
     print("Connected to {0} with result code {1}".format(HOST, rc))
     # Subscribe to the hotword detected topic
-    client.subscribe("hermes/hotword/default/detected")
-
-    client.subscribe("hermes/asr/textCaptured")
+    client.subscribe(HOTWORD_DETECTED)
+    # Subscribe to the text command captured topic
+    client.subscribe(TEXT_CAPTURED)
     # Subscribe to intent topic
     client.subscribe('hermes/intent/#')
-    
+
+# Process a message as it arrives
 def on_message(client, userdata, msg):
+    payload = json.loads(msg.payload)
+    print(payload)
     if msg.topic == 'hermes/hotword/default/detected':
         print("Hotword detected!")
         pixel_ring.think() # actually listening
@@ -50,11 +65,9 @@ def on_message(client, userdata, msg):
         time.sleep(1)
         pixel_ring.off()
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-
-pixel_ring.off()
-client.connect(HOST, PORT, 60)
-client.loop_forever()
-
+if __name__ == '__main__':
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(HOST, PORT, 60)
+    pixel_ring.off() # turn off ring
+    client.loop_forever()
