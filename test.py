@@ -11,7 +11,7 @@ import logging
 # Setup logger
 logging.basicConfig(stream=sys.stderr, format='%(levelname)7s: %(message)s')
 logger = logging.getLogger('Handler')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # MQTT client to connect to the bus
 client = mqtt.Client()
@@ -25,7 +25,7 @@ ALL_INTENTS = "hermes/intent/#"
 
 # Subscribe to the important messages
 def on_connect(client, userdata, flags, rc):
-    logger.debug("Connected to {0} with result code {1}".format(HOST, rc))
+    logger.info("Connected to {0} with result code {1}".format(HOST, rc))
     # Subscribe to the hotword detected topic
     client.subscribe(HOTWORD_DETECTED)
     # Subscribe to the text command captured topic
@@ -41,27 +41,27 @@ def on_message(client, userdata, msg):
         logger.info("Hotword detected!")
         pixel_ring.think() # actually listening
     elif msg.topic == 'hermes/asr/textCaptured':
-        logger.info("Command captured!")
+        logger.info("Command captured! {0}".format(msg.topic))
         pixel_ring.set_color(r=200)
         time.sleep(0.5)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:AutoRun':
-        logger.info("Intent: auto run")
+        logger.info("Intent topic: {0}".format(msg.topic))
         pixel_ring.set_color(r=204,g=46,b=250)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:Stop':
-        logger.info("Intent: stop")
+        logger.info("Intent topic: {0}".format(msg.topic))
         pixel_ring.set_color(g=100)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:OpenTheDoor':
-        logger.info("Intent: open the door")
+        logger.info("Intent topic: {0}".format(msg.topic))
         pixel_ring.set_color(g=255)
         time.sleep(1)
         pixel_ring.off()
     elif msg.topic == 'hermes/intent/taka-wang:CloseTheDoor':
-        logger.info("Intent: close the door")
+        logger.info("Intent topic: {0}".format(msg.topic))
         pixel_ring.set_color(r=200,g=133)
         time.sleep(1)
         pixel_ring.off()        
